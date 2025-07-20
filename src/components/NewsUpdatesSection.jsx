@@ -267,15 +267,16 @@ const NewsUpdatesSection = () => {
                 color: '#1E293B',
                 fontWeight: 700,
                 mb: 3,
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontSize: { xs: '2rem', sm: '2.25rem', md: '2.5rem' },
                 position: 'relative',
+                px: { xs: 2, sm: 0 },
                 '&::after': {
                   content: '""',
                   position: 'absolute',
                   bottom: '-10px',
                   left: '50%',
                   transform: 'translateX(-50%)',
-                  width: '80px',
+                  width: { xs: '60px', md: '80px' },
                   height: '4px',
                   background: 'linear-gradient(45deg, #22C55E, #10B981)',
                   borderRadius: '2px',
@@ -288,10 +289,11 @@ const NewsUpdatesSection = () => {
               variant="h6"
               sx={{
                 color: '#64748B',
-                maxWidth: '700px',
+                maxWidth: { xs: '90%', md: '700px' },
                 mx: 'auto',
                 lineHeight: 1.6,
-                fontSize: { xs: '1rem', md: '1.25rem' },
+                fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.25rem' },
+                px: { xs: 2, sm: 0 },
               }}
             >
               Stay informed about our latest projects, achievements, and community impact stories
@@ -303,14 +305,15 @@ const NewsUpdatesSection = () => {
             <motion.div variants={itemVariants} sx={{ mb: 6 }}>
               <Card
                 sx={{
-                  borderRadius: '24px',
+                  borderRadius: { xs: '16px', md: '24px' },
                   overflow: 'hidden',
                   boxShadow: '0 20px 60px rgba(0, 0, 0, 0.1)',
                   background: 'white',
                   border: '1px solid rgba(34, 197, 94, 0.1)',
                   transition: 'all 0.4s ease',
+                  mx: { xs: 1, sm: 0 },
                   '&:hover': {
-                    transform: 'translateY(-8px)',
+                    transform: { xs: 'translateY(-4px)', md: 'translateY(-8px)' },
                     boxShadow: '0 32px 80px rgba(0, 0, 0, 0.15)',
                   },
                 }}
@@ -324,12 +327,20 @@ const NewsUpdatesSection = () => {
                       alt={featuredArticle.title}
                       sx={{
                         objectFit: 'cover',
-                        height: { xs: '250px', md: '400px' },
+                        height: { xs: '200px', sm: '250px', md: '400px' },
+                        cursor: 'pointer',
                       }}
+                      onClick={() => handleOpenArticle(featuredArticle)}
                     />
                   </Grid>
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <CardContent sx={{ p: { xs: 3, md: 4 }, height: '100%', display: 'flex', flexDirection: 'column' }}>
+                    <CardContent sx={{ 
+                      p: { xs: 2, sm: 3, md: 4 }, 
+                      height: { xs: 'auto', md: '100%' }, 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      minHeight: { xs: '280px', md: 'auto' }
+                    }}>
                       {/* Featured Badge */}
                       <Box sx={{ mb: 2 }}>
                         <Chip
@@ -371,10 +382,15 @@ const NewsUpdatesSection = () => {
                         sx={{
                           color: '#1E293B',
                           fontWeight: 700,
-                          mb: 2,
-                          fontSize: { xs: '1.5rem', md: '1.75rem' },
-                          lineHeight: 1.3,
+                          mb: { xs: 1.5, md: 2 },
+                          fontSize: { xs: '1.25rem', sm: '1.5rem', md: '1.75rem' },
+                          lineHeight: { xs: 1.3, md: 1.3 },
+                          cursor: 'pointer',
+                          '&:hover': {
+                            color: '#22C55E',
+                          },
                         }}
+                        onClick={() => handleOpenArticle(featuredArticle)}
                       >
                         {featuredArticle.title}
                       </Typography>
@@ -385,8 +401,13 @@ const NewsUpdatesSection = () => {
                         sx={{
                           color: '#64748B',
                           lineHeight: 1.6,
-                          mb: 3,
+                          mb: { xs: 2, md: 3 },
                           flex: 1,
+                          fontSize: { xs: '0.9rem', sm: '1rem' },
+                          display: '-webkit-box',
+                          WebkitLineClamp: { xs: 3, md: 4 },
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
                         }}
                       >
                         {featuredArticle.summary}
@@ -462,10 +483,10 @@ const NewsUpdatesSection = () => {
           )}
 
           {/* Regular Articles Grid */}
-          <motion.div variants={itemVariants}>
-            <Grid container spacing={3}>
+          <motion.div variants={itemVariants} className="mt-5">
+            <Grid container spacing={{ xs: 2, sm: 3, md: 3 }} sx={{ px: { xs: 1, sm: 0 } }}>
               {regularArticles.map((article, index) => (
-                <Grid size={{ xs: 12, md: 6, lg: 4 }} key={article.id}>
+                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={article.id}>
                   <motion.div
                     variants={cardVariants}
                     transition={{ delay: index * 0.1 }}
@@ -475,7 +496,7 @@ const NewsUpdatesSection = () => {
                     <Card
                       sx={{
                         height: '100%',
-                        borderRadius: '20px',
+                        borderRadius: { xs: '12px', md: '20px' },
                         overflow: 'hidden',
                         background: 'white',
                         border: '1px solid rgba(34, 197, 94, 0.1)',
@@ -493,11 +514,19 @@ const NewsUpdatesSection = () => {
                         height="200"
                         image={article.image}
                         alt={article.title}
-                        sx={{ objectFit: 'cover' }}
+                        sx={{ 
+                          objectFit: 'cover',
+                          height: { xs: '180px', sm: '200px' },
+                        }}
                       />
-                      <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', height: 'calc(100% - 200px)' }}>
+                      <CardContent sx={{ 
+                        p: { xs: 2, sm: 3 }, 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        height: { xs: 'calc(100% - 180px)', sm: 'calc(100% - 200px)' } 
+                      }}>
                         {/* Category and Meta */}
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: { xs: 1.5, sm: 2 } }}>
                           <Chip
                             icon={<article.categoryIcon sx={{ fontSize: 14 }} />}
                             label={article.category}
@@ -506,10 +535,10 @@ const NewsUpdatesSection = () => {
                               backgroundColor: `${article.categoryColor}20`,
                               color: article.categoryColor,
                               fontWeight: 600,
-                              fontSize: '0.75rem',
+                              fontSize: { xs: '0.7rem', sm: '0.75rem' },
                             }}
                           />
-                          <Typography variant="caption" sx={{ color: '#64748B' }}>
+                          <Typography variant="caption" sx={{ color: '#64748B', fontSize: { xs: '0.7rem', sm: '0.75rem' } }}>
                             {article.readTime}
                           </Typography>
                         </Box>
@@ -519,15 +548,16 @@ const NewsUpdatesSection = () => {
                           variant="h6"
                           component="h3"
                           sx={{
+                            fontWeight: 600,
                             color: '#1E293B',
-                            fontWeight: 700,
-                            mb: 2,
+                            mb: { xs: 1, sm: 1.5 },
+                            fontSize: { xs: '1rem', sm: '1.1rem' },
                             lineHeight: 1.3,
-                            fontSize: '1.1rem',
                             display: '-webkit-box',
                             WebkitLineClamp: 2,
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
+                            minHeight: { xs: '2.6rem', sm: '2.9rem' },
                           }}
                         >
                           {article.title}
@@ -539,10 +569,11 @@ const NewsUpdatesSection = () => {
                           sx={{
                             color: '#64748B',
                             lineHeight: 1.6,
-                            mb: 3,
+                            mb: { xs: 2, sm: 3 },
                             flex: 1,
+                            fontSize: { xs: '0.85rem', sm: '0.9rem' },
                             display: '-webkit-box',
-                            WebkitLineClamp: 3,
+                            WebkitLineClamp: { xs: 2, sm: 3 },
                             WebkitBoxOrient: 'vertical',
                             overflow: 'hidden',
                           }}
