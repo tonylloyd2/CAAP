@@ -29,7 +29,12 @@ import {
   Favorite as ValuesIcon,
   WorkOutline as ProgramsIcon,
   TrendingUp as ImpactIcon,
+  People as TestimonialsIcon,
+  Group as TeamIcon,
+  Article as NewsIcon,
+  FavoriteBorder as DonateIcon,
   ContactMail as ContactIcon,
+  Email as NewsletterIcon,
 } from '@mui/icons-material';
 
 const Navigation = () => {
@@ -45,6 +50,10 @@ const Navigation = () => {
     { label: 'Values', href: '#values', icon: ValuesIcon, color: '#8B5CF6' },
     { label: 'Programs', href: '#programs', icon: ProgramsIcon, color: '#F59E0B' },
     { label: 'Impact', href: '#impact', icon: ImpactIcon, color: '#EF4444' },
+    { label: 'Stories', href: '#testimonials', icon: TestimonialsIcon, color: '#EC4899' },
+    { label: 'Team', href: '#team', icon: TeamIcon, color: '#10B981' },
+    { label: 'News', href: '#news', icon: NewsIcon, color: '#06B6D4' },
+    { label: 'Donate', href: '#donate', icon: DonateIcon, color: '#EF4444' },
     { label: 'Contact', href: '#contact', icon: ContactIcon, color: '#3B82F6' },
   ];
 

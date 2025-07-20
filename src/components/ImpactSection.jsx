@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Typography, Container, Grid, Card, CardContent } from '@mui/material';
+// eslint-disable-next-line no-unused-vars
 import { motion, useInView } from 'framer-motion';
 import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
@@ -294,7 +295,7 @@ const ImpactSection = () => {
         {/* Impact Metrics Grid */}
         <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
           {impactData.map((item, index) => (
-            <Grid item xs={12} sm={6} md={3} key={item.id}>
+            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={item.id}>
               <CounterCard item={item} index={index} />
             </Grid>
           ))}
