@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 import {
@@ -11,6 +11,8 @@ import {
   Grid,
   IconButton,
   Chip,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import {
   LinkedIn,
@@ -23,10 +25,18 @@ import {
   Psychology,
   Group,
   Star,
+  ArrowBackIos,
+  ArrowForwardIos,
 } from '@mui/icons-material';
 
 const TeamSection = () => {
   const [hoveredMember, setHoveredMember] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const boardMembers = [
     {
@@ -115,6 +125,60 @@ const TeamSection = () => {
     }
   ];
 
+  // Auto-play functionality for mobile slider
+  useEffect(() => {
+    if (isMobile && isAutoPlaying) {
+      const interval = setInterval(() => {
+        setCurrentSlide((prev) => (prev + 1) % boardMembers.length);
+      }, 4000); // Change slide every 4 seconds
+
+      return () => clearInterval(interval);
+    }
+  }, [isMobile, isAutoPlaying, boardMembers.length]);
+
+  const nextSlide = () => {
+    setIsAutoPlaying(false); // Pause auto-play when user manually navigates
+    setCurrentSlide((prev) => (prev + 1) % boardMembers.length);
+    setTimeout(() => setIsAutoPlaying(true), 8000); // Resume after 8 seconds
+  };
+
+  const prevSlide = () => {
+    setIsAutoPlaying(false);
+    setCurrentSlide((prev) => (prev - 1 + boardMembers.length) % boardMembers.length);
+    setTimeout(() => setIsAutoPlaying(true), 8000);
+  };
+
+  const goToSlide = (index) => {
+    setIsAutoPlaying(false);
+    setCurrentSlide(index);
+    setTimeout(() => setIsAutoPlaying(true), 8000);
+  };
+
+  // Touch handlers for swipe
+  const handleTouchStart = (e) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      setIsAutoPlaying(false);
+      nextSlide();
+    } else if (isRightSwipe) {
+      setIsAutoPlaying(false);
+      prevSlide();
+    }
+  };
+
   const advisors = [
     {
       name: "Prof. Margaret Kamar",
@@ -194,15 +258,31 @@ const TeamSection = () => {
         },
       }}
     >
-      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2 }}>
+      <Container maxWidth="xl" sx={{ 
+        position: 'relative', 
+        zIndex: 2,
+        minHeight: { xs: '80vh', md: 'auto' }, // Ensure minimum height on mobile
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}>
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={{ opacity: 1 }} // Start visible on mobile
+          animate="visible"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
+          style={{ 
+            opacity: 1, // Fallback for mobile
+            minHeight: 'inherit',
+          }}
         >
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-5">
+          <motion.div 
+            variants={itemVariants} 
+            initial={{ opacity: 1 }}
+            className="text-center mb-5"
+          >
             <Typography
               variant="h2"
               component="h2"
@@ -210,8 +290,9 @@ const TeamSection = () => {
                 color: '#F8FAFC',
                 fontWeight: 700,
                 mb: 3,
-                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontSize: { xs: '2rem', sm: '2.25rem', md: '2.5rem' },
                 position: 'relative',
+                opacity: 1, // Ensure visibility on mobile
                 '&::after': {
                   content: '""',
                   position: 'absolute',
@@ -234,7 +315,8 @@ const TeamSection = () => {
                 maxWidth: '700px',
                 mx: 'auto',
                 lineHeight: 1.6,
-                fontSize: { xs: '1rem', md: '1.25rem' },
+                fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
+                opacity: 1, // Ensure visibility on mobile
               }}
             >
               Dedicated professionals and community leaders working together to create lasting change in rural Kenya
@@ -242,7 +324,7 @@ const TeamSection = () => {
           </motion.div>
 
           {/* Leadership Team */}
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} initial={{ opacity: 1 }}>
             <Typography
               variant="h4"
               sx={{
@@ -255,41 +337,225 @@ const TeamSection = () => {
               Leadership Team
             </Typography>
             
-            <Grid container spacing={3}>
-              {boardMembers.map((member, index) => (
-                <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={member.id}>
-                  <motion.div
-                    variants={cardVariants}
-                    transition={{ delay: index * 0.1 }}
-                    onHoverStart={() => setHoveredMember(member.id)}
-                    onHoverEnd={() => setHoveredMember(null)}
+            {/* Mobile Slider */}
+            {isMobile ? (
+              <Box sx={{ position: 'relative', px: 1, mx: -1 }}>
+                {/* Slider Container */}
+                <Box
+                  sx={{
+                    overflow: 'hidden',
+                    borderRadius: '16px',
+                    position: 'relative',
+                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+                  }}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      transform: `translateX(-${currentSlide * 100}%)`,
+                      transition: 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                    }}
                   >
-                    <Card
+                    {boardMembers.map((member) => (
+                      <Box
+                        key={member.id}
+                        sx={{
+                          minWidth: '100%',
+                          px: 1,
+                        }}
+                      >
+                        <Card
+                          sx={{
+                            background: 'rgba(30, 41, 59, 0.9)',
+                            backdropFilter: 'blur(20px)',
+                            border: `2px solid ${member.color}`,
+                            borderRadius: '16px',
+                            overflow: 'hidden',
+                            position: 'relative',
+                            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                            '&::before': {
+                              content: '""',
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              height: '4px',
+                              background: `linear-gradient(45deg, ${member.color}, rgba(34, 197, 94, 0.8))`,
+                            },
+                          }}
+                        >
+                          <CardContent sx={{ p: 3 }}>
+                            <Box sx={{ textAlign: 'center', mb: 3 }}>
+                              <Avatar
+                                src={member.image}
+                                alt={member.name}
+                                sx={{
+                                  width: 100,
+                                  height: 100,
+                                  mx: 'auto',
+                                  mb: 2,
+                                  border: `3px solid ${member.color}`,
+                                  boxShadow: `0 8px 24px ${member.color}40`,
+                                }}
+                              />
+                              <Typography
+                                variant="h5"
+                                sx={{
+                                  color: '#F8FAFC',
+                                  fontWeight: 700,
+                                  mb: 1,
+                                  fontSize: '1.5rem',
+                                }}
+                              >
+                                {member.name}
+                              </Typography>
+                              <Typography
+                                variant="body1"
+                                sx={{
+                                  color: member.color,
+                                  fontWeight: 600,
+                                  mb: 2,
+                                }}
+                              >
+                                {member.role}
+                              </Typography>
+                              <Typography
+                                variant="body2"
+                                sx={{
+                                  color: '#CBD5E1',
+                                  lineHeight: 1.6,
+                                  mb: 3,
+                                }}
+                              >
+                                {member.bio}
+                              </Typography>
+                              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mb: 2 }}>
+                                <IconButton
+                                  size="small"
+                                  sx={{
+                                    color: member.color,
+                                    backgroundColor: `${member.color}20`,
+                                    '&:hover': { backgroundColor: `${member.color}30` },
+                                  }}
+                                >
+                                  <Email fontSize="small" />
+                                </IconButton>
+                                <IconButton
+                                  size="small"
+                                  sx={{
+                                    color: member.color,
+                                    backgroundColor: `${member.color}20`,
+                                    '&:hover': { backgroundColor: `${member.color}30` },
+                                  }}
+                                >
+                                  <LinkedIn fontSize="small" />
+                                </IconButton>
+                              </Box>
+                            </Box>
+                          </CardContent>
+                        </Card>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+
+                {/* Navigation Arrows */}
+                <IconButton
+                  onClick={prevSlide}
+                  sx={{
+                    position: 'absolute',
+                    left: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: 'rgba(34, 197, 94, 0.9)',
+                    color: 'white',
+                    zIndex: 2,
+                    '&:hover': {
+                      backgroundColor: 'rgba(34, 197, 94, 1)',
+                    },
+                  }}
+                >
+                  <ArrowBackIos />
+                </IconButton>
+                <IconButton
+                  onClick={nextSlide}
+                  sx={{
+                    position: 'absolute',
+                    right: 0,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    backgroundColor: 'rgba(34, 197, 94, 0.9)',
+                    color: 'white',
+                    zIndex: 2,
+                    '&:hover': {
+                      backgroundColor: 'rgba(34, 197, 94, 1)',
+                    },
+                  }}
+                >
+                  <ArrowForwardIos />
+                </IconButton>
+
+                {/* Dots Indicator */}
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3, gap: 1 }}>
+                  {boardMembers.map((_, index) => (
+                    <Box
+                      key={index}
+                      onClick={() => goToSlide(index)}
                       sx={{
-                        height: '100%',
-                        background: 'rgba(30, 41, 59, 0.9)',
-                        backdropFilter: 'blur(20px)',
-                        border: `2px solid ${hoveredMember === member.id ? member.color : 'rgba(34, 197, 94, 0.2)'}`,
-                        borderRadius: '20px',
-                        overflow: 'hidden',
-                        position: 'relative',
+                        width: 12,
+                        height: 12,
+                        borderRadius: '50%',
+                        backgroundColor: currentSlide === index ? '#22C55E' : 'rgba(34, 197, 94, 0.3)',
                         cursor: 'pointer',
-                        transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                        transform: hoveredMember === member.id ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
-                        boxShadow: hoveredMember === member.id 
-                          ? `0 20px 60px ${member.color}20, 0 8px 32px rgba(0, 0, 0, 0.3)`
-                          : '0 8px 32px rgba(0, 0, 0, 0.2)',
-                        '&::before': {
-                          content: '""',
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          height: '4px',
-                          background: `linear-gradient(45deg, ${member.color}, rgba(34, 197, 94, 0.8))`,
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          backgroundColor: '#22C55E',
                         },
                       }}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            ) : (
+              /* Desktop Grid */
+              <Grid container spacing={{ xs: 2, sm: 3, md: 3 }}>
+                {boardMembers.map((member, index) => (
+                  <Grid size={{ xs: 12, sm: 6, lg: 4 }} key={member.id}>
+                    <motion.div
+                      variants={cardVariants}
+                      transition={{ delay: index * 0.1 }}
+                      onHoverStart={() => setHoveredMember(member.id)}
+                      onHoverEnd={() => setHoveredMember(null)}
                     >
+                      <Card
+                        sx={{
+                          height: '100%',
+                          background: 'rgba(30, 41, 59, 0.9)',
+                          backdropFilter: 'blur(20px)',
+                          border: `2px solid ${hoveredMember === member.id ? member.color : 'rgba(34, 197, 94, 0.2)'}`,
+                          borderRadius: '20px',
+                          overflow: 'hidden',
+                          position: 'relative',
+                          cursor: 'pointer',
+                          transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                          transform: hoveredMember === member.id ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+                          boxShadow: hoveredMember === member.id 
+                            ? `0 20px 60px ${member.color}20, 0 8px 32px rgba(0, 0, 0, 0.3)`
+                            : '0 8px 32px rgba(0, 0, 0, 0.2)',
+                          '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            height: '4px',
+                            background: `linear-gradient(45deg, ${member.color}, rgba(34, 197, 94, 0.8))`,
+                          },
+                        }}
+                      >
                       <CardContent sx={{ p: 3 }}>
                         {/* Profile Header */}
                         <Box sx={{ textAlign: 'center', mb: 3 }}>
@@ -455,10 +721,11 @@ const TeamSection = () => {
                 </Grid>
               ))}
             </Grid>
+            )}
           </motion.div>
 
           {/* Advisory Board */}
-          <motion.div variants={itemVariants} sx={{ mt: 8 }}>
+          <motion.div variants={itemVariants} initial={{ opacity: 1 }} sx={{ mt: 8 }}>
             <Typography
               variant="h4"
               sx={{
@@ -471,7 +738,7 @@ const TeamSection = () => {
               Advisory Board
             </Typography>
             
-            <Grid container spacing={3} justifyContent="center">
+            <Grid container spacing={{ xs: 2, sm: 3, md: 3 }} justifyContent="center">
               {advisors.map((advisor, index) => (
                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
                   <motion.div variants={cardVariants} transition={{ delay: index * 0.1 }}>
@@ -542,7 +809,7 @@ const TeamSection = () => {
           </motion.div>
 
           {/* Join Team CTA */}
-          <motion.div variants={itemVariants} className="text-center mt-5">
+          <motion.div variants={itemVariants} initial={{ opacity: 1 }} className="text-center mt-5">
             <Box
               sx={{
                 p: { xs: 3, md: 4 },
