@@ -89,10 +89,13 @@ const Footer = () => {
             <Paper
               elevation={0}
               sx={{
-                p: 5,
+                p: { xs: 3, sm: 4, md: 5 },
                 mb: 6,
-                background: 'linear-gradient(135deg, #22C55E, #10B981)',
-                borderRadius: '24px',
+                background: {
+                  xs: 'linear-gradient(135deg, rgba(34, 197, 94, 0.95), rgba(16, 185, 129, 0.95))',
+                  md: 'linear-gradient(135deg, #22C55E, #10B981)'
+                },
+                borderRadius: { xs: '16px', md: '24px' },
                 textAlign: 'center',
                 position: 'relative',
                 overflow: 'hidden',
@@ -101,8 +104,8 @@ const Footer = () => {
                   position: 'absolute',
                   top: 0,
                   right: 0,
-                  width: '400px',
-                  height: '400px',
+                  width: { xs: '200px', md: '400px' },
+                  height: { xs: '200px', md: '400px' },
                   background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
                   borderRadius: '50%',
                   transform: 'translate(50%, -50%)',
@@ -114,10 +117,12 @@ const Footer = () => {
                 component="h2"
                 sx={{
                   fontWeight: 700,
-                  mb: 2,
+                  mb: { xs: 1.5, md: 2 },
                   position: 'relative',
                   zIndex: 1,
                   color: '#F8FAFC',
+                  fontSize: { xs: '1.6rem', sm: '2rem', md: '2.5rem' },
+                  lineHeight: { xs: 1.2, md: 1.3 },
                 }}
               >
                 Join the Fight Against Poverty
@@ -125,21 +130,32 @@ const Footer = () => {
               <Typography
                 variant="h6"
                 sx={{
-                  mb: 4,
+                  mb: { xs: 3, md: 4 },
                   opacity: 0.95,
                   position: 'relative',
                   zIndex: 1,
-                  maxWidth: '600px',
+                  maxWidth: { xs: '100%', md: '600px' },
                   mx: 'auto',
                   color: '#CBD5E1',
+                  fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.25rem' },
+                  lineHeight: { xs: 1.5, md: 1.6 },
+                  px: { xs: 1, md: 0 }
                 }}
               >
                 Every contribution, every volunteer hour, every partnership 
                 brings us closer to our vision of poverty-free communities
               </Typography>
               <Box
-                className="d-flex flex-wrap justify-content-center gap-3"
-                sx={{ position: 'relative', zIndex: 1 }}
+                sx={{ 
+                  position: 'relative', 
+                  zIndex: 1,
+                  display: 'flex',
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: { xs: 2, sm: 3 },
+                  flexWrap: 'wrap'
+                }}
               >
                 <Button
                   variant="contained"
@@ -149,10 +165,15 @@ const Footer = () => {
                     background: 'rgba(255, 255, 255, 0.9)',
                     color: '#15803D',
                     fontWeight: 700,
-                    px: 4,
-                    py: 2,
+                    px: { xs: 3, md: 4 },
+                    py: { xs: 1.5, md: 2 },
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    width: { xs: '200px', sm: 'auto' },
+                    borderRadius: { xs: '12px', md: '8px' },
                     '&:hover': {
                       background: 'white',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
                     },
                   }}
                 >
@@ -166,10 +187,15 @@ const Footer = () => {
                     background: 'rgba(255, 255, 255, 0.9)',
                     color: '#15803D',
                     fontWeight: 700,
-                    px: 4,
-                    py: 2,
+                    px: { xs: 3, md: 4 },
+                    py: { xs: 1.5, md: 2 },
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    width: { xs: '200px', sm: 'auto' },
+                    borderRadius: { xs: '12px', md: '8px' },
                     '&:hover': {
                       background: 'white',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
                     },
                   }}
                 >
@@ -183,10 +209,15 @@ const Footer = () => {
                     background: 'rgba(255, 255, 255, 0.9)',
                     color: '#15803D',
                     fontWeight: 700,
-                    px: 4,
-                    py: 2,
+                    px: { xs: 3, md: 4 },
+                    py: { xs: 1.5, md: 2 },
+                    fontSize: { xs: '0.9rem', md: '1rem' },
+                    width: { xs: '200px', sm: 'auto' },
+                    borderRadius: { xs: '12px', md: '8px' },
                     '&:hover': {
                       background: 'white',
+                      transform: 'translateY(-2px)',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.15)'
                     },
                   }}
                 >

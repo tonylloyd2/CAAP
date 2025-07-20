@@ -385,62 +385,6 @@ const CoreValuesSection = () => {
               ))}
             </Box>
           </Box>
-
-          {/* Values Statement */}
-          <motion.div variants={itemVariants} className="text-center">
-            <Box
-              sx={{
-                p: 4,
-                background: 'linear-gradient(135deg, #22C55E, #10B981)',
-                borderRadius: '20px',
-                maxWidth: '900px',
-                mx: 'auto',
-                color: 'white',
-                position: 'relative',
-                overflow: 'hidden',
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  width: '200px',
-                  height: '200px',
-                  background: 'radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%)',
-                  borderRadius: '50%',
-                  transform: 'translate(50%, -50%)',
-                },
-              }}
-            >
-              <Typography
-                variant="h4"
-                component="h3"
-                sx={{
-                  color: 'white',
-                  fontWeight: 700,
-                  mb: 2,
-                  position: 'relative',
-                  zIndex: 2,
-                }}
-              >
-                Values-Driven Impact
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: 'rgba(255, 255, 255, 0.95)',
-                  lineHeight: 1.7,
-                  fontSize: '1.1rem',
-                  position: 'relative',
-                  zIndex: 2,
-                  fontWeight: 400,
-                }}
-              >
-                These core values are not just words on paper – they are the foundation 
-                of every program we implement, every partnership we form, and every 
-                decision we make in our journey toward poverty eradication.
-              </Typography>
-            </Box>
-          </motion.div>
         </motion.div>
       </Container>
     </Box>

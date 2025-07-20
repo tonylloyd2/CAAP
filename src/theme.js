@@ -49,6 +49,9 @@ const caapTheme = createTheme({
       '@media (max-width:768px)': {
         fontSize: '2rem',
       },
+      '@media (max-width:480px)': {
+        fontSize: '1.8rem',
+      },
     },
     h3: {
       fontWeight: 600,
@@ -56,6 +59,9 @@ const caapTheme = createTheme({
       lineHeight: 1.4,
       '@media (max-width:768px)': {
         fontSize: '1.5rem',
+      },
+      '@media (max-width:480px)': {
+        fontSize: '1.3rem',
       },
     },
     h4: {
@@ -123,9 +129,15 @@ const caapTheme = createTheme({
           borderRadius: '16px',
           transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
           border: '1px solid rgba(255, 255, 255, 0.1)',
+          '@media (max-width:768px)': {
+            borderRadius: '12px',
+          },
           '&:hover': {
             transform: 'translateY(-4px)',
             boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
+            '@media (max-width:768px)': {
+              transform: 'translateY(-2px)',
+            },
           },
         },
       },

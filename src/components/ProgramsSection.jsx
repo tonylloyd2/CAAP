@@ -27,6 +27,7 @@ const ProgramsSection = () => {
       icon: AccountBalance,
       title: 'Microfinance Initiatives',
       description: 'Providing small loans and financial literacy training to help community members start and grow sustainable businesses.',
+      shortDescription: 'Small loans and financial training for sustainable businesses.',
       category: 'Economic Empowerment',
       image: 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=300&fit=crop',
       features: ['Micro-loans', 'Business Training', 'Financial Literacy', 'Mentorship'],
@@ -35,6 +36,7 @@ const ProgramsSection = () => {
       icon: Grass,
       title: 'Agricultural Training',
       description: 'Teaching modern farming techniques, sustainable practices, and crop diversification to increase food security and income.',
+      shortDescription: 'Modern farming techniques for better food security and income.',
       category: 'Food Security',
       image: 'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&h=300&fit=crop',
       features: ['Modern Techniques', 'Crop Diversification', 'Equipment Access', 'Market Linkage'],
@@ -43,6 +45,7 @@ const ProgramsSection = () => {
       icon: SchoolIcon,
       title: 'School Construction & Scholarships',
       description: 'Building educational infrastructure and providing scholarships to ensure every child has access to quality education.',
+      shortDescription: 'Building schools and providing scholarships for quality education.',
       category: 'Education',
       image: 'https://images.unsplash.com/photo-1497486751825-1233686d5d80?w=400&h=300&fit=crop',
       features: ['Infrastructure', 'Scholarships', 'Learning Materials', 'Teacher Training'],
@@ -51,6 +54,7 @@ const ProgramsSection = () => {
       icon: LocalHospital,
       title: 'Healthcare Clinics',
       description: 'Establishing mobile and permanent healthcare facilities to provide essential medical services to remote communities.',
+      shortDescription: 'Mobile and permanent clinics for essential medical services.',
       category: 'Healthcare',
       image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=300&fit=crop',
       features: ['Mobile Clinics', 'Preventive Care', 'Health Education', 'Emergency Services'],
@@ -59,6 +63,7 @@ const ProgramsSection = () => {
       icon: Water,
       title: 'Water & Sanitation Projects',
       description: 'Installing clean water systems and sanitation facilities to improve health outcomes and quality of life.',
+      shortDescription: 'Clean water systems and sanitation for better health.',
       category: 'Infrastructure',
       image: 'https://images.unsplash.com/photo-1541919329513-35f7af297129?w=400&h=300&fit=crop',
       features: ['Clean Water Access', 'Sanitation Systems', 'Hygiene Education', 'Maintenance Training'],
@@ -141,7 +146,10 @@ const ProgramsSection = () => {
                   transform: 'translateX(-50%)',
                   width: '80px',
                   height: '4px',
-                  background: 'linear-gradient(45deg, #22C55E, #10B981)',
+                  background: {
+                    xs: 'linear-gradient(45deg, rgba(34, 197, 94, 0.6), rgba(16, 185, 129, 0.6))',
+                    md: 'linear-gradient(45deg, #22C55E, #10B981)'
+                  },
                   borderRadius: '2px',
                 },
               }}
@@ -203,14 +211,23 @@ const ProgramsSection = () => {
                 >
                   <Card
                     sx={{
-                      height: '420px',
-                      borderRadius: '24px',
+                      height: { xs: '280px', sm: '320px', md: '420px' },
+                      borderRadius: { xs: '16px', md: '24px' },
                       overflow: 'hidden',
-                      background: 'rgba(15, 23, 42, 0.95)',
+                      background: {
+                        xs: 'rgba(30, 41, 59, 0.95)',
+                        md: 'rgba(15, 23, 42, 0.95)'
+                      },
                       backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(34, 197, 94, 0.15)',
+                      border: {
+                        xs: '1px solid rgba(34, 197, 94, 0.2)',
+                        md: '1px solid rgba(34, 197, 94, 0.15)'
+                      },
                       position: 'relative',
-                      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
+                      boxShadow: {
+                        xs: '0 4px 20px rgba(0, 0, 0, 0.2)',
+                        md: '0 8px 32px rgba(0, 0, 0, 0.3)'
+                      },
                       transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                       '&::before': {
                         content: '""',
@@ -225,7 +242,11 @@ const ProgramsSection = () => {
                       },
                       '&:hover': {
                         borderColor: 'rgba(34, 197, 94, 0.3)',
-                        boxShadow: '0 20px 60px rgba(34, 197, 94, 0.15)',
+                        boxShadow: {
+                          xs: '0 8px 30px rgba(34, 197, 94, 0.1)',
+                          md: '0 20px 60px rgba(34, 197, 94, 0.15)'
+                        },
+                        transform: { xs: 'translateY(-4px)', md: 'translateY(-8px)' },
                         '&::before': {
                           opacity: 1,
                         },
@@ -247,16 +268,22 @@ const ProgramsSection = () => {
                       <Box
                         className="program-icon"
                         sx={{
-                          width: 64,
-                          height: 64,
-                          borderRadius: '16px',
-                          background: 'linear-gradient(135deg, #22C55E, #10B981)',
+                          width: { xs: 56, md: 64 },
+                          height: { xs: 56, md: 64 },
+                          borderRadius: { xs: '12px', md: '16px' },
+                          background: {
+                            xs: 'linear-gradient(135deg, rgba(34, 197, 94, 0.8), rgba(16, 185, 129, 0.8))',
+                            md: 'linear-gradient(135deg, #22C55E, #10B981)'
+                          },
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           mx: 'auto',
                           mb: 2,
-                          boxShadow: '0 8px 24px rgba(34, 197, 94, 0.3)',
+                          boxShadow: {
+                            xs: '0 4px 16px rgba(34, 197, 94, 0.2)',
+                            md: '0 8px 24px rgba(34, 197, 94, 0.3)'
+                          },
                           transition: 'transform 0.3s ease',
                         }}
                       >
@@ -278,8 +305,8 @@ const ProgramsSection = () => {
 
                     <CardContent 
                       sx={{ 
-                        p: 3,
-                        height: 'calc(100% - 120px)',
+                        p: { xs: 2, md: 3 },
+                        height: { xs: 'calc(100% - 80px)', md: 'calc(100% - 120px)' },
                         display: 'flex',
                         flexDirection: 'column',
                       }}
@@ -290,9 +317,9 @@ const ProgramsSection = () => {
                         sx={{
                           color: '#F8FAFC',
                           fontWeight: 700,
-                          mb: 2,
+                          mb: { xs: 1.5, md: 2 },
                           lineHeight: 1.2,
-                          fontSize: '1.4rem',
+                          fontSize: { xs: '1.2rem', md: '1.4rem' },
                         }}
                       >
                         {program.title}
@@ -303,15 +330,18 @@ const ProgramsSection = () => {
                         sx={{
                           color: '#94A3B8',
                           lineHeight: 1.6,
-                          mb: 3,
+                          mb: { xs: 2, md: 3 },
                           flex: 1,
-                          fontSize: '0.95rem',
+                          fontSize: { xs: '0.85rem', md: '0.95rem' },
                         }}
                       >
-                        {program.description}
+                        {isMobile ? program.shortDescription : program.description}
                       </Typography>
 
-                      <Box sx={{ mt: 'auto' }}>
+                      <Box sx={{ 
+                        mt: 'auto',
+                        display: { xs: 'none', md: 'block' }
+                      }}>
                         <Typography 
                           variant="subtitle2" 
                           sx={{ 
@@ -390,9 +420,12 @@ const ProgramsSection = () => {
           <motion.div variants={cardVariants} className="text-center mt-5">
             <Box
               sx={{
-                p: 4,
-                background: 'linear-gradient(135deg, #22C55E, #10B981)',
-                borderRadius: '24px',
+                p: { xs: 3, md: 4 },
+                background: {
+                  xs: 'linear-gradient(135deg, rgba(34, 197, 94, 0.9), rgba(16, 185, 129, 0.9))',
+                  md: 'linear-gradient(135deg, #22C55E, #10B981)'
+                },
+                borderRadius: { xs: '16px', md: '24px' },
                 color: 'white',
                 position: 'relative',
                 overflow: 'hidden',
